@@ -17,8 +17,8 @@ server.get('/ping', async (req, res) => {
     return 'pong\n'
 })
 
-/* register routes */
-server.register(require('./routes/reviews.js'), { prefix: '/reviews' })
+/* register routes */ // This is first part of where the data get processed 
+server.register(require('./routes/reviews.js'), { prefix: '/reviews' }) // Goes to /routes/review.ts
 
 server.listen({ port: PORT }, (err, address) => {
     if (err) {

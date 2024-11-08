@@ -9,6 +9,8 @@ try {
   console.error('Error parsing JSON:', error);
 }
 
+//Second part of the data being processed 
+
 async function routes(server: any) {
     server.get('/', async(req: any, res: any) => {
         return jsonData
@@ -28,6 +30,24 @@ async function routes(server: any) {
         }
 
         return jsonData.filter((review: any) => review.id == id)
+    })
+
+    server.post('/', async (req: any, res: any) => {
+        const newReview = req.body;
+        newReview.id = jsonData.length ? jsonData[jsonData.length - 1].id + 1 : 1;
+        jsonData.push(newReview);
+
+        try {
+            fs.writeFileSync('./dummy_data/reviews.json', JSON.stringify(jsonData, null, 2));
+            res.code(201).send(newReview);
+        } catch (error) {
+            console.error('Error writing JSON:', error);
+            res.code(500).send({
+                error: "Internal Server Error",
+                message: "Could not save the review",
+                statusCode: "500"
+            });
+        }
     })
 }
 

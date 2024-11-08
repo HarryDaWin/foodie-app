@@ -1,0 +1,32 @@
+TODO LIST:
+
+
+Delete user
+
+
+--Harrison--
+Change json data format to be:
+
+-User Name
+-User Email
+-Profile
+-top 5 restaurant 
+-Users can add photos to the restaurant
+
+Change input format 
+
+Change display format
+
+
+-------For Later-------
+
+Geo location of user
+
+
+
+
+Add oauth for create user:
+Add unique user ID:
+
+CSS
+
