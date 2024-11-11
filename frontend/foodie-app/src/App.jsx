@@ -3,14 +3,19 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 
+
+
 function ReviewCard(props) {
-  console.log(props?.review)
   return (
     <>
       <div className='review-card'>
-        <h3>Restaurant: {props?.review?.restaurant_id}</h3>
-        <h5>User: {props?.review?.user_id}</h5>
-        <p>{props?.review?.text}</p>
+        <h5>UserID: {props?.review?.id}</h5>
+        <h5>Username: {props?.review?.user_id}</h5>
+        <div>
+          {props?.review?.restaurants?.map((item, index) => (
+            <p key={index}>{item}</p>
+          ))}
+        </div>
       </div>
     </>
   )
@@ -35,6 +40,8 @@ function createReview(review) {
 
 function App() {
   const [reviews, setReviews] = useState([])
+  const [userId, setUserId] = useState('')
+  const [restaurants, setRestaurants] = useState('')
 
   useEffect(() => {
     fetch('http://localhost:8080/reviews')
@@ -42,37 +49,38 @@ function App() {
       .then((json) => {
         setReviews(json)
       })
-      .catch(err => console.log(err));
-  }, []);
+  }, [])
 
-  // const reviewItems = reviews.map((item) => {
-  //   <ReviewCard key={item.id} review={item} />
-  // })
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    const review = {
+      user_id: userId,
+      restaurants: restaurants.split(',') // Convert input text to an array
+    }
+    createReview(review)
+  }
 
   return (
-    <>
-      <h1>
-        Reviews
-      </h1>
-      <ul>
-        {
-          reviews.map(review => (
-            <ReviewCard key={review?.id} review={review} />
-          ))
-        }
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        const formData = new FormData(e.target);
-        const newReview = {
-          text: formData.get('reviewText')
-        };
-        createReview(newReview);
-      }}>
-        <input type="text" name="reviewText" placeholder="Write a review" required />
-        <button type="submit">Submit</button>
+    <div className='App'>
+      <form onSubmit={handleSubmit}>
+        <input
+          type='text'
+          value={userId}
+          onChange={(e) => setUserId(e.target.value)}
+          placeholder='Enter username'
+        />
+        <input
+          type='text'
+          value={restaurants}
+          onChange={(e) => setRestaurants(e.target.value)}
+          placeholder='Enter restaurants, separated by commas'
+        />
+        <button type='submit'>Submit</button>
       </form>
-      </ul>
-    </>
+      {reviews.map((review, index) => (
+        <ReviewCard key={index} review={review} />
+      ))}
+    </div>
   )
 }
 
