@@ -85,11 +85,19 @@ nav ul li a.active::after {
   background-color: white;
 }
 
+.review-container {
+  display: flex;
+  flex-direction: column; /* Stack items vertically */
+  justify-content: center;
+  align-items: center;
+  height: 100vh; /* Full viewport height */
+}
 
 .review-card {
   display: block;
+  align-items: center;
   border: 1px solid black;
-  margin: 5px;
+  margin: 10px;
   padding: 5px;
   border-radius: 5px;
   width: 200px;
