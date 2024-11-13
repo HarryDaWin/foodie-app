@@ -16,5 +16,13 @@
       "hello"
     ],
     "id": 2
+  },
+  {
+    "user_id": "alex",
+    "restaurants": [
+      "hello",
+      "hello"
+    ],
+    "id": 3
   }
 ]
